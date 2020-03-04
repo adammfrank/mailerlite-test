@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-            <subscriber-list></subscriber-list>
+        <container-component></container-component>
     </div>
 </body>
 </html>

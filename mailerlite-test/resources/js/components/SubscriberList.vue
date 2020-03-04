@@ -1,22 +1,20 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Subscriber List</div>
-          <ul id="subscriber-list">
-            <li v-for="subscriber in subscribers" v-bind:key="subscriber.id">{{subscriber.name}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <div class="justify-content-center">
+    <div class="card-header">Subscriber List</div>
+    <ul id="subscriber-list" class="list-group">
+      <li
+        v-on:click="$emit('subscriber-selected', subscriber)"
+        class="list-group-item"
+        v-for="subscriber in subscribers"
+        v-bind:key="subscriber.id"
+      >{{subscriber.name}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
   mounted() {
-    console.log("Component mounted.");
     this.getSubscribers();
   },
   data: function() {
