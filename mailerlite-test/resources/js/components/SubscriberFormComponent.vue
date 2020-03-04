@@ -25,7 +25,7 @@
         >{{ option.text }}</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" v-on:click="updateSubscriber" class="btn btn-primary">Submit</button>
   </form>
 </template>
 
@@ -67,6 +67,12 @@ export default {
       const response = await this.$http.get("/api/subscribers");
       console.log("RESPONSE ", response);
       this.subscribers = response.data;
+    },
+    updateSubscriber: async function() {
+      const response = await this.$http.put(
+        `/api/subscribers/${this.selectedSubscriber.id}`,
+        this.selectedSubscriber
+      );
     }
   }
 };

@@ -73,7 +73,15 @@ class SubscriberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate(Subscriber::$rules);
+
+        $existingRecord = Subscriber::find($id);
+
+        if ($existingRecord) {
+            $existingRecord->update($validatedData);
+            return $existingRecord;
+        }
+
     }
 
     /**
