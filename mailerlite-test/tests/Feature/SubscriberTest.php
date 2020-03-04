@@ -37,4 +37,14 @@ class SubscriberTest extends TestCase
             ->assertJson($subscriber);
 
     }
+    public function testUpdateSubscriberValidationFailure()
+    {
+        $subscribers = factory(Subscriber::class, 3)->create();
+
+        $subscriber = $subscribers->get(0)->toArray();
+
+        $response = $this->putJson('/api/subscribers/' . $subscriber['id'], ['name' => 'aba'])
+            ->assertStatus(422);
+
+    }
 }
