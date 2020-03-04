@@ -15,7 +15,6 @@ class SubscriberController extends Controller
     public function index()
     {
         return Subscriber::all();
-        //
     }
 
     /**
@@ -25,7 +24,9 @@ class SubscriberController extends Controller
      */
     public function create()
     {
-        //
+        return [
+            'states' => $Subscriber::$states,
+        ];
     }
 
     /**
@@ -36,7 +37,9 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate(Subscriber::$rules);
+
+        Subscriber::create($validatedData);
     }
 
     /**
