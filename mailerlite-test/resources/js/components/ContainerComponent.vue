@@ -18,10 +18,7 @@
 
 <script>
 export default {
-  mounted() {
-    console.log("Component mounted.");
-    this.getSubscribers();
-  },
+  mounted() {},
   data: function() {
     return {
       activeComponent: "subscriber-list",

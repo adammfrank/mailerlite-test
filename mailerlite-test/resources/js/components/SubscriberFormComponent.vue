@@ -1,6 +1,5 @@
 <template>
   <form>
-    <h5>Subscriber</h5>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -29,18 +28,18 @@
 
     <h5>Fields</h5>
     <ul class="list-group">
-      <li class="list-group-item" v-for="field in fields" v-bind:key="field.id">
+      <li class="list-group-item" v-for="field in selectedSubscriber.fields" v-bind:key="field.id">
         <div class="form-group">
           <label>Title</label>
           <input type="text" class="form-control" v-model="field.title" />
           <label>Type</label>
-          <select>
+          <select v-model="field.type">
             <option disabled value>Please select one</option>
             <option
-              v-for="option of typeOptions"
-              v-bind:key="option.value"
-              v-bind:value="option.value"
-            >{{ option.value }}</option>
+              v-for="typeOption in typeOptions"
+              v-bind:key="typeOption.value"
+              v-bind:value="typeOption.value"
+            >{{ typeOption.value }}</option>
           </select>
         </div>
       </li>
@@ -52,21 +51,10 @@
 
 <script>
 export default {
-  mounted() {
-    console.log("Component mounted.");
-    this.getSubscribers();
-  },
+  mounted() {},
   props: {
     selectedSubscriber: {
       default: {}
-    },
-    fields: {
-      default: [
-        {
-          title: "",
-          type: "date"
-        }
-      ]
     }
   },
   data: function() {
@@ -92,6 +80,20 @@ export default {
           text: "Unconfirmed",
           value: 4
         }
+      ],
+      typeOptions: [
+        {
+          value: "date"
+        },
+        {
+          value: "number"
+        },
+        {
+          value: "string"
+        },
+        {
+          value: "boolean"
+        }
       ]
     };
   },
@@ -102,13 +104,24 @@ export default {
       this.subscribers = response.data;
     },
     updateSubscriber: async function() {
+      this.selectedSubscriber.fields = this.selectedSubscriber.fields.map(
+        field => {
+          field.subscriber_id = this.selectedSubscriber.id;
+          return field;
+        }
+      );
       const response = await this.$http.put(
         `/api/subscribers/${this.selectedSubscriber.id}`,
         this.selectedSubscriber
       );
     },
     addField: function() {
-      this.fields.unshift({ title: "", type: "date" });
+      this.selectedSubscriber.fields.push({
+        title: "",
+        type: "date",
+        id: null,
+        subscriber_id: null
+      });
     }
   }
 };

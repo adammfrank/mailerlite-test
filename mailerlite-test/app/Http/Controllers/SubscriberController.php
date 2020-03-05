@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Field;
 use App\Subscriber;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        return Subscriber::all();
+        return Subscriber::with(['fields'])->get();
     }
 
     /**
@@ -73,15 +74,29 @@ class SubscriberController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validatedData = $request->validate(Subscriber::$rules);
 
         $existingRecord = Subscriber::find($id);
 
         if ($existingRecord) {
             $existingRecord->update($validatedData);
-            return $existingRecord;
         }
 
+        if ($request->input('fields')) {
+            // Validator::make($request->input('fields'), [
+            //     'fields.title' => 'required',
+            //     'fields.type' => 'required',
+            //     'fields.subscriber_id' => 'required',
+            // ])->validate();
+            foreach ($request->input('fields') as $field) {
+                if ($field['id']) {
+                    Field::find($field['id'])->update($field);
+                } else {
+                    Field::create($field);
+                }
+            }
+        }
     }
 
     /**
