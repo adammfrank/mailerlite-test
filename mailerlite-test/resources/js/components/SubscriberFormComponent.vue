@@ -1,5 +1,6 @@
 <template>
   <form>
+    <h5>Subscriber</h5>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -25,6 +26,26 @@
         >{{ option.text }}</option>
       </select>
     </div>
+
+    <h5>Fields</h5>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="field in fields" v-bind:key="field.id">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" v-model="field.title" />
+          <label>Type</label>
+          <select>
+            <option disabled value>Please select one</option>
+            <option
+              v-for="option of typeOptions"
+              v-bind:key="option.value"
+              v-bind:value="option.value"
+            >{{ option.value }}</option>
+          </select>
+        </div>
+      </li>
+    </ul>
+    <button type="button" v-on:click="addField" class="btn btn-primary">Add Field</button>
     <button type="button" v-on:click="updateSubscriber" class="btn btn-primary">Submit</button>
   </form>
 </template>
@@ -35,7 +56,19 @@ export default {
     console.log("Component mounted.");
     this.getSubscribers();
   },
-  props: ["selectedSubscriber"],
+  props: {
+    selectedSubscriber: {
+      default: {}
+    },
+    fields: {
+      default: [
+        {
+          title: "",
+          type: "date"
+        }
+      ]
+    }
+  },
   data: function() {
     return {
       stateOptions: [
@@ -73,6 +106,9 @@ export default {
         `/api/subscribers/${this.selectedSubscriber.id}`,
         this.selectedSubscriber
       );
+    },
+    addField: function() {
+      this.fields.unshift({ title: "", type: "date" });
     }
   }
 };
