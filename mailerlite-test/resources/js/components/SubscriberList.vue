@@ -9,6 +9,7 @@
         v-bind:key="subscriber.id"
       >{{subscriber.name}}</li>
     </ul>
+    <button class="btn btn-primary" v-on:click="addSubscriber">Add Subscriber</button>
   </div>
 </template>
 
@@ -25,8 +26,17 @@ export default {
   methods: {
     getSubscribers: async function() {
       const response = await this.$http.get("/api/subscribers");
-      console.log("RESPONSE ", response);
       this.subscribers = response.data;
+    },
+    addSubscriber: function() {
+      const newSubscriber = {
+        id: null,
+        email_address: null,
+        name: "New Subscriber",
+        fields: []
+      };
+      this.subscribers.push(newSubscriber);
+      this.$emit("subscriber-selected", newSubscriber);
     }
   }
 };

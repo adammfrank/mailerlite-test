@@ -40,7 +40,23 @@ class SubscriberController extends Controller
     {
         $validatedData = $request->validate(Subscriber::$rules);
 
-        Subscriber::create($validatedData);
+        $subscriber = Subscriber::create($validatedData);
+
+        if ($request->input('fields')) {
+            foreach ($request->input('fields') as $fieldData) {
+
+                $fieldData['subscriber_id'] = $subscriber->id;
+
+                Field::create($fieldData);
+            }
+            // Validator::make($request->input('fields'), [
+            //     'fields.title' => 'required',
+            //     'fields.type' => 'required',
+            //     'fields.subscriber_id' => 'required',
+            // ])->validate();
+            // Field::insert($request->input('fields'));
+        }
+
     }
 
     /**
@@ -79,10 +95,6 @@ class SubscriberController extends Controller
 
         $existingRecord = Subscriber::find($id);
 
-        if ($existingRecord) {
-            $existingRecord->update($validatedData);
-        }
-
         if ($request->input('fields')) {
             // Validator::make($request->input('fields'), [
             //     'fields.title' => 'required',
@@ -97,6 +109,10 @@ class SubscriberController extends Controller
                 }
             }
         }
+        $existingRecord->update($validatedData);
+
+        return response()->json(Subscriber::find($id));
+
     }
 
     /**

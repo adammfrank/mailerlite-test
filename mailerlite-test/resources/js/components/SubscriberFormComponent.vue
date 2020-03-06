@@ -1,5 +1,6 @@
 <template>
   <form>
+    <h5>Subscriber</h5>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -104,16 +105,33 @@ export default {
       this.subscribers = response.data;
     },
     updateSubscriber: async function() {
-      this.selectedSubscriber.fields = this.selectedSubscriber.fields.map(
-        field => {
-          field.subscriber_id = this.selectedSubscriber.id;
-          return field;
+      if (this.selectedSubscriber.id) {
+        this.selectedSubscriber.fields = this.selectedSubscriber.fields.map(
+          field => {
+            field.subscriber_id = this.selectedSubscriber.id;
+            return field;
+          }
+        );
+        try {
+          const response = await this.$http.put(
+            `/api/subscribers/${this.selectedSubscriber.id}`,
+            this.selectedSubscriber
+          );
+          alert("Subscriber Updated");
+        } catch (error) {
+          alert(error.message);
         }
-      );
-      const response = await this.$http.put(
-        `/api/subscribers/${this.selectedSubscriber.id}`,
-        this.selectedSubscriber
-      );
+      } else {
+        try {
+          const response = await this.$http.post(
+            `/api/subscribers`,
+            this.selectedSubscriber
+          );
+          alert("Subscriber Stored");
+        } catch (error) {
+          alert(error.message);
+        }
+      }
     },
     addField: function() {
       this.selectedSubscriber.fields.push({

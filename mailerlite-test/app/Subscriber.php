@@ -26,6 +26,7 @@ class Subscriber extends Model
         'name',
         'email_address',
         'state',
+        'subscriber_id',
     ];
 
     public function fields()
