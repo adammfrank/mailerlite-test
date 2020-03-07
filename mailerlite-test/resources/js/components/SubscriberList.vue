@@ -18,10 +18,6 @@
 export default {
   props: ["subscribers"],
   methods: {
-    // getSubscribers: async function() {
-    //   const response = await this.$http.get("/api/subscribers");
-    //   this.subscribers = response.data;
-    // },
     addSubscriber: function() {
       const newSubscriber = {
         id: null,
