@@ -20,11 +20,23 @@
 
 9. `cd code/mailerlite-test/`
 
-10. `composer install`
+10. `cp .env.example .env`
 
-11. `php artisan migrate`
+11. Set these values in .env
 
-12. Navigate to http://homestead.test in your browser
+- DB_DATABASE=homestead
+
+- DB_USERNAME=homestead
+
+- DB_PASSWORD=secret
+
+12. `php artisan key:generate`
+
+13. `composer install`
+
+14. `php artisan migrate`
+
+15. Navigate to http://homestead.test in your browser
 
 ##### Run Tests:
 `php artisan test`
