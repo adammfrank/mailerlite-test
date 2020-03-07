@@ -12,3 +12,7 @@ $factory->define(Subscriber::class, function (Faker $faker) {
         'state' => 1,
     ];
 });
+
+$factory->afterCreating(Subscriber::class, function (Subscriber $subscriber, Faker $faker) {
+    $subscriber->fields()->save(factory(App\Field::class)->make());
+});

@@ -47,6 +47,11 @@
     </ul>
     <button type="button" v-on:click="addField" class="btn btn-primary">Add Field</button>
     <button type="button" v-on:click="updateSubscriber" class="btn btn-primary">Submit</button>
+    <button
+      type="button"
+      v-on:click="$emit('subscriber-deleted', selectedSubscriber)"
+      class="btn btn-danger"
+    >Delete</button>
   </form>
 </template>
 

@@ -58,6 +58,8 @@ class SubscriberController extends Controller
             // Field::insert($request->input('fields'));
         }
 
+        return response()->json($subscriber);
+
     }
 
     /**
