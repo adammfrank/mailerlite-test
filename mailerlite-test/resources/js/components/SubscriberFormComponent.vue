@@ -146,6 +146,9 @@ export default {
       }
     },
     addField: function() {
+      if (!this.selectedSubscriber.fields) {
+        this.selectedSubscriber.fields = [];
+      }
       this.selectedSubscriber.fields.push({
         title: "",
         type: "date",

@@ -99,17 +99,14 @@ class SubscriberController extends Controller
         $existingRecord = Subscriber::find($id);
 
         if ($request->input('fields')) {
+            Field::where('subscriber_id', $id)->delete();
             // Validator::make($request->input('fields'), [
             //     'fields.title' => 'required',
             //     'fields.type' => 'required',
             //     'fields.subscriber_id' => 'required',
             // ])->validate();
             foreach ($request->input('fields') as $field) {
-                if ($field['id']) {
-                    Field::find($field['id'])->update($field);
-                } else {
-                    Field::create($field);
-                }
+                Field::create($field);
             }
         }
         $existingRecord->update($validatedData);
