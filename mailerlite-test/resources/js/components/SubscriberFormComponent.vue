@@ -29,7 +29,15 @@
 
     <h5>Fields</h5>
     <ul class="list-group">
-      <li class="list-group-item" v-for="field in selectedSubscriber.fields" v-bind:key="field.id">
+      <li
+        class="list-group-item"
+        v-for="(field, index) in selectedSubscriber.fields"
+        v-bind:key="field.id"
+      >
+        <div class="row">
+          <span class="col-11"></span>
+          <a href="#" role="button" class="col-1 btn" v-on:click="deleteField(index)">X</a>
+        </div>
         <div class="form-group">
           <label>Title</label>
           <input type="text" class="form-control" v-model="field.title" />
@@ -144,6 +152,11 @@ export default {
         id: null,
         subscriber_id: null
       });
+    },
+    deleteField: function(deletedIndex) {
+      this.selectedSubscriber.fields = this.selectedSubscriber.fields.filter(
+        (field, index) => index !== deletedIndex
+      );
     }
   }
 };
