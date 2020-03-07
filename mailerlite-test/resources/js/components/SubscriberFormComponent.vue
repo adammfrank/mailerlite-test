@@ -101,7 +101,6 @@ export default {
   methods: {
     getSubscribers: async function() {
       const response = await this.$http.get("/api/subscribers");
-      console.log("RESPONSE ", response);
       this.subscribers = response.data;
     },
     updateSubscriber: async function() {

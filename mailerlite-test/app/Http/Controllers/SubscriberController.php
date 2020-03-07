@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Field;
 use App\Subscriber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SubscriberController extends Controller
 {
@@ -123,6 +124,11 @@ class SubscriberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Validator::make(['subscriber_id' => $id], [
+            'subscriber_id' => 'required|exists:subscribers,id',
+        ])->validate();
+
+        Field::where('subscriber_id', $id)->delete();
+        Subscriber::where('id', $id)->delete();
     }
 }
