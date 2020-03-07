@@ -1,6 +1,6 @@
 # mailerlite-test
 
-Installation:
+#####Installation:
 
 1. Download Virtualbox https://www.virtualbox.org/wiki/Downloads
 
@@ -25,3 +25,6 @@ Installation:
 11. `php artisan migrate`
 
 12. Navigate to http://homestead.test in your browser
+
+#####Run Tests:
+`php artisan test`
