@@ -50,12 +50,6 @@ class SubscriberController extends Controller
 
                 Field::create($fieldData);
             }
-            // Validator::make($request->input('fields'), [
-            //     'fields.title' => 'required',
-            //     'fields.type' => 'required',
-            //     'fields.subscriber_id' => 'required',
-            // ])->validate();
-            // Field::insert($request->input('fields'));
         }
 
         return response()->json($subscriber);
@@ -100,11 +94,6 @@ class SubscriberController extends Controller
 
         if ($request->input('fields')) {
             Field::where('subscriber_id', $id)->delete();
-            // Validator::make($request->input('fields'), [
-            //     'fields.title' => 'required',
-            //     'fields.type' => 'required',
-            //     'fields.subscriber_id' => 'required',
-            // ])->validate();
             foreach ($request->input('fields') as $field) {
                 Field::create($field);
             }
