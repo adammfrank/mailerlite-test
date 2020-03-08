@@ -12,6 +12,7 @@
       <div class="col-md-6">
         <div class="card">
           <subscriber-form
+            v-if="selectedSubscriber"
             v-bind:selected-subscriber="selectedSubscriber"
             v-on:subscriber-deleted="onSubscriberDeleted($event)"
           ></subscriber-form>
@@ -30,7 +31,7 @@ export default {
   data: function() {
     return {
       activeComponent: "subscriber-list",
-      selectedSubscriber: {},
+      selectedSubscriber: null,
       subscribers: []
     };
   },
@@ -40,13 +41,18 @@ export default {
       this.subscribers = response.data;
     },
     onSubscriberDeleted: async function(deletedSubscriber) {
+      if (!deletedSubscriber.id) {
+        this.subscribers.pop();
+        this.selectedSubscriber = null;
+        return;
+      }
       try {
         await this.$http.delete(`/api/subscribers/${deletedSubscriber.id}`);
         this.$emit("subscriber-deleted", deletedSubscriber);
         this.subscribers = this.subscribers.filter(
           subscriber => subscriber.id !== deletedSubscriber.id
         );
-        this.selectedSubscriber = {};
+        this.selectedSubscriber = null;
       } catch (error) {
         alert(error.message);
       }

@@ -19,6 +19,7 @@ export default {
   props: ["subscribers"],
   methods: {
     addSubscriber: function() {
+      if (this.subscribers.some(subscriber => !subscriber.id)) return;
       const newSubscriber = {
         id: null,
         email_address: null,
@@ -26,14 +27,6 @@ export default {
         fields: []
       };
       this.subscribers.push(newSubscriber);
-    },
-    deleteSubscriber: async function(deletedSubscriber) {
-      try {
-        await this.$http.delete(`/api/subscribers/${deletedSubscriber.id}`);
-        this.subscribers = this.subscribers.filter(subscriber => subscriber);
-      } catch (error) {
-        alert(error.message);
-      }
     }
   }
 };
