@@ -15,6 +15,7 @@
             v-if="selectedSubscriber"
             v-bind:selected-subscriber="selectedSubscriber"
             v-on:subscriber-deleted="onSubscriberDeleted($event)"
+            v-on:selected-subscriber-updated="onSelectedSubscriberUpdated($event)"
           ></subscriber-form>
         </div>
       </div>
@@ -56,6 +57,9 @@ export default {
       } catch (error) {
         alert(error.message);
       }
+    },
+    onSelectedSubscriberUpdated: function(updatedSelectedSubscriber) {
+      this.selectedSubscriber = updatedSelectedSubscriber;
     }
   }
 };

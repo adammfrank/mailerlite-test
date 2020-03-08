@@ -118,17 +118,20 @@ export default {
     },
     updateSubscriber: async function() {
       if (this.selectedSubscriber.id) {
-        this.selectedSubscriber.fields = this.selectedSubscriber.fields.map(
-          field => {
-            field.subscriber_id = this.selectedSubscriber.id;
-            return field;
-          }
-        );
+        if (this.selectedSubscriber.fields) {
+          this.selectedSubscriber.fields = this.selectedSubscriber.fields.map(
+            field => {
+              field.subscriber_id = this.selectedSubscriber.id;
+              return field;
+            }
+          );
+        }
         try {
           const response = await this.$http.put(
             `/api/subscribers/${this.selectedSubscriber.id}`,
             this.selectedSubscriber
           );
+          this.$emit("selected-subscriber-updated", response.data);
           alert("Subscriber Updated");
         } catch (error) {
           alert(error.message);
@@ -139,6 +142,7 @@ export default {
             `/api/subscribers`,
             this.selectedSubscriber
           );
+          this.$emit("selected-subscriber-updated", response.data);
           alert("Subscriber Stored");
         } catch (error) {
           alert(error.message);
