@@ -27,6 +27,7 @@ export default {
         fields: []
       };
       this.subscribers.push(newSubscriber);
+      this.$emit("subscriber-selected", newSubscriber);
     }
   }
 };
